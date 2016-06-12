@@ -10,6 +10,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'FileService Proxy' });
 });
+/* POST request with form data */
 router.post('/', function(req, res, next) {
   var urlOutput = "";
   console.log('Entering FORM Parsing');
@@ -28,10 +29,19 @@ router.post('/', function(req, res, next) {
     })
 
   } else {
-    console.log('Invalid URL');
-    urlOutput = "URL ist ungültig";
+    handleErrorForm("URL ist ungültig", 'Aus der angegebenen URL kann nicht geladen werden', urlOutput);
   }
 });
+
+function handleErrorForm(message, submessage, urlOutput) {
+  console.log('Invalid URL');
+  urlOutput = "URL ist ungültig";
+  res.render('urlerror', {
+    message: message,
+    submessage: submessage,
+    urlOutput: req.body.urlstring
+  })
+}
 
 function detectFileService(urlString) {
   var urlHost = url.parse(urlString).hostname
