@@ -19,27 +19,30 @@ router.post('/', function(req, res, next) {
     console.log('Found valid URL');
     urlOutput = url.parse(req.body.urlstring).href;
     urlOutput = detectFileService(urlOutput);
-    console.log('reading url: ', url);
-    request.head(urlOutput, function(err, respond, body) {
-      console.log('content-type: ', respond.headers['content-type']);
-      console.log('content-length: ', respond.headers['content-length']);
-      request(urlOutput).pipe(res).on('close', function() {
-        console.log('done');
+    if (urlOutput != null) {
+      console.log('reading url: ', url);
+      request.head(urlOutput, function(err, respond, body) {
+        console.log('content-type: ', respond.headers['content-type']);
+        console.log('content-length: ', respond.headers['content-length']);
+        request(urlOutput).pipe(res).on('close', function() {
+          console.log('done');
+        })
       })
-    })
-
+    }
   } else {
-    handleErrorForm("URL ist ungültig", 'Aus der angegebenen URL kann nicht geladen werden', urlOutput);
+    var errorURL = url.parse(req.body.urlstring).href;
+    console.log(errorURL);
+    handleErrorForm(res, "URL ist ungültig", 'Aus der angegebenen URL kann nicht geladen werden', errorURL);
   }
 });
 
-function handleErrorForm(message, submessage, urlOutput) {
+function handleErrorForm(res, message, submessage, errorURL) {
   console.log('Invalid URL');
   urlOutput = "URL ist ungültig";
   res.render('urlerror', {
     message: message,
     submessage: submessage,
-    urlOutput: req.body.urlstring
+    urlOutput: errorURL
   })
 }
 
