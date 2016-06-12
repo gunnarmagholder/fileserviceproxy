@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  p.
+    Dies ist der FileService Proxy der Hamburg Port Authority. Er dient dem
+    Laden von Dateien aus einigen Internet Dateidiensten wie DropBox oder
+    OneDrive.
+  p.
+    Gemäß der Sicherheitsvorgaben der HPA ist das Laden von Dateien nur bei
+    öffentlichen Freigaben erlaubt. Hierdurch können die Anwendungen der
+    Internet Dateidienste nicht genutzt werden.
+  p.
+    Bitte geben Sie die URL an, die für den Abruf der Datei übersendet bekamen.
+
+  form(action='/', method='post')
+    input(name='urlstring', type='text')
+    button(type='submit', value='save').
+      Datei anfordern
