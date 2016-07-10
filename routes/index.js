@@ -54,7 +54,7 @@ function detectFileService(urlString) {
     returnValue = urlString;
     returnValue = urlString.replace("dl=0", "dl=1");
   }
-  if (urlHost.indexOf("onedrive") >= 0) {
+  if ((urlHost.indexOf("onedrive") >= 0) || (urlHost.indexOf("1drv.ms") >= 0)) {
     console.log("Found OneDrive URL String");
     returnValue = urlString;
   }
