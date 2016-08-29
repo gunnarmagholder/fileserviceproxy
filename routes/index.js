@@ -24,7 +24,10 @@ router.post('/', function(req, res, next) {
       request.head(urlOutput, function(err, respond, body) {
         console.log('content-type: ', respond.headers['content-type']);
         console.log('content-length: ', respond.headers['content-length']);
-        request(urlOutput).pipe(res).on('close', function() {
+        request({
+          uri: urlOutput,
+          followAllRedirects: true
+        }).pipe(res).on('close', function() {
           console.log('done');
         })
       })
@@ -47,17 +50,24 @@ function handleErrorForm(res, message, submessage, errorURL) {
 }
 
 function detectFileService(urlString) {
-  var urlHost = url.parse(urlString).hostname
+  console.log("Url String : " + urlString);
+  var urlHost = url.parse(urlString).hostname;
+  console.log("Found Hostname:" + urlHost);
   var returnValue = null;
   if (urlHost.indexOf("dropbox.com") >= 0) {
     console.log("Found DropBox URL String");
     returnValue = urlString;
     returnValue = urlString.replace("dl=0", "dl=1");
   }
-  if ((urlHost.indexOf("onedrive") >= 0) || (urlHost.indexOf("1drv.ms") >= 0)) {
+  if (urlHost.indexOf("onedrive") >= 0) {
     console.log("Found OneDrive URL String");
     returnValue = urlString;
   }
+  if (urlHost.indexOf("1drv.ms") >= 0) {
+    console.log("Found OneDrive URL String");
+    returnValue = urlString;
+  }
+
   if (urlHost.indexOf("google.com") >= 0) {
     console.log("Found Google Drive Link");
     var rx = /(.*)\/d\/(.*)\/(.*)/g;
