@@ -3,17 +3,13 @@ extends layout
 block content
   h1= title
   p.
-    Dies ist der FileService Proxy der Hamburg Port Authority. Er dient dem
-    Laden von Dateien aus einigen Internet Dateidiensten wie DropBox oder
-    OneDrive.
+    This is a proxy for connecting to internet fileservices like DropBox or OneDrive.
+    It only allows to download files, that are public. The idea came out of
+    a security regulation, that prohibits the use of Internet File Services.
   p.
-    Gemäß der Sicherheitsvorgaben der HPA ist das Laden von Dateien nur bei
-    öffentlichen Freigaben erlaubt. Hierdurch können die Anwendungen der
-    Internet Dateidienste nicht genutzt werden.
-  p.
-    Bitte geben Sie die URL an, die für den Abruf der Datei übersendet bekamen.
+    Please enter the URL of a public file.
 
   form(action='/', method='post')
     input(id='urlinput',name='urlstring', type='text')
     button(type='submit', value='save').
-      Datei anfordern
+      Request file
