@@ -35,13 +35,13 @@ router.post('/', function(req, res, next) {
   } else {
     var errorURL = url.parse(req.body.urlstring).href;
     console.log(errorURL);
-    handleErrorForm(res, "URL ist ungültig", 'Aus der angegebenen URL kann nicht geladen werden', errorURL);
+    handleErrorForm(res, "URL is invalid", "Can't read from given url", errorURL);
   }
 });
 
 function handleErrorForm(res, message, submessage, errorURL) {
   console.log('Invalid URL');
-  urlOutput = "URL ist ungültig";
+  urlOutput = "URL is invalid";
   res.render('urlerror', {
     message: message,
     submessage: submessage,
